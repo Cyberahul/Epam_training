@@ -1,0 +1,39 @@
+Install packages of Java in Local System:	
+	- apt install maven
+	- apt install openjdk-11-jdk-headless
+
+Cloned Already existing repo for Hello world Message of java:
+	- git clone https://github.com/macagua/example.java.helloworld.git
+
+
+Modify Main.java file To print any message
+
+
+Create .jar file from App.java:
+	- javac Main.java
+	- jar cfme Main.jar Manifest.txt HelloWorld.Main Main.class
+
+Create Dockerfile with the content:
+	FROM openjdk
+	VOLUME /tmp
+	COPY Main.jar app.jar
+	ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+creating a image for docker: 
+	- docker build -t spring_boot .
+
+
+run docker image:
+	- docker run spring_boot
+
+
+Push local image to dockerhub:
+	- docker tag spring_boot dockplaydocker/spring_boot:latest
+	- docker push dockplaydocker/spring_boot
+	
+
+You can use image by pull:
+	- docker pull dockplaydocker/spring_boot
+
+
+
