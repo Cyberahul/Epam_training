@@ -1,0 +1,54 @@
+#services:
+# web:
+    #image: nginx
+      #ports:
+      #- 8888:80
+       #  database:
+    #    image: redis
+
+
+services:
+  db:
+    image: mysql
+    container_name: mysql_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD="secret"
+    ports:
+      - 9002:80
+    networks:
+      - backend
+
+    volumes:
+      - db_data:/var/lib/mysql:rw
+
+  web1:
+    image: apache
+    container_name: apache_web
+    build: front/
+    ports:
+      - 8888:80
+    links:
+      - db
+    volumes:
+      - apa_data:/var/www/html:rw
+    depends_on:
+      - db
+    networks:
+      frontend:
+        ipv4_address: 172.20.0.10
+
+
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+    driver: bridge
+  backend:
+    driver: bridge
+
+
+volumes:
+  db_data:
+  apa_data:
