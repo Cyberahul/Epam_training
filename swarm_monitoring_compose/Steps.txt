@@ -1,0 +1,17 @@
+step-1 -> Create docker compose file as I have created swarm_compose.yml
+
+Step-2 -> Initiate docker swarm on manager node and join worker node via token
+
+	docker swarm init --advertise-addr 35.154.12.229
+	docker swarm join --token SWMTKN-1-3ysulo21e4xyg7pva46kihfeb00sn3mjtqlwq9ln6e422c1n7t-2ne1zcbp8phpwqjd3162tkhdi 13.233.29.111:2377
+	- To check node is succesfully joined to manager or leader: 
+		docker node ls
+
+Step-3 -> Create Service from the docker compose file to run on each node using swarm stack
+	docker stack deploy -c swarm_compose.yml goal-server
+
+Step-4 -> You can check service list or process
+	- docker service ls
+	- docker ps
+
+Now service is created on each node successfully..
